@@ -1,3 +1,5 @@
 # hello-world
-My firs repository
-Мой первый репозиторий
+
+My firs repository.
+
+Мой первый репозиторий.
