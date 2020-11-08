@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Page Title</title>
+        <style>
+              html {
+               height: 100%; /* Высота веб-страницы */
+               background: #000  center ;/* Путь к графическому файлу с фоном */
+               background-size: cover;/*Растягиваем фон во весь экран*/
+               color: #fff; /* Белый цвет текста */
+   }
+         </style>
+    </head>
+    
+    <body>
+
+    <canvas id="c"></canvas>
+
+    <style type="text/css">
+
+    /*базовый сброс*/
+
+        {margin: 0; padding: 0;}
+
+        /*добавление черного фона к телу, чтобы была четкость символов*/
+
+        body {background: black;}
+
+        canvas {display: block;}
+
+    </style>
+
+    <script>
+
+        var c = document.getElementById("c");
+
+        var ctx = c.getContext("2d");
+
+ 
+
+        //делаем холст во весь экран
+
+        c.height = window.innerHeight;
+
+        c.width = window.innerWidth;
+
+ 
+
+        //просто набор символов
+
+        var msimbol = "1234567890abcdef?,;:-)*&^/$#@!";
+
+        //преобразование строки в массив из отдельных символов
+
+        msimbol = msimbol.split("");
+
+ 
+
+        var font_size = 10;
+
+        var columns = c.width/font_size; //количество столбцов
+
+        //массив капель - по одному на столбец
+
+        var drops = [];
+
+        //x - это координата х
+
+        //1 = y, координата капли (то же самое для каждой капли изначально
+
+        for(var x = 0; x < columns; x++)
+
+            drops[x] = 1;
+
+ 
+
+        //рисование символов
+
+        function draw()
+
+        {
+
+            //черный фон для холста
+
+            //полупрозрачный фон, чтобы показать след
+
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+
+            ctx.fillRect(0, 0, c.width, c.height);
+
+           
+
+            ctx.fillStyle = "#0F0"; //зеленый текст
+
+            ctx.font = font_size + "px arial";
+
+            //зацикливаем дождь
+
+            for(var i = 0; i < drops.length; i++)
+
+            {
+
+                //случайный символ для вывода
+
+                var text = msimbol[Math.floor(Math.random()*msimbol.length)];
+
+                //x = i*font_size, y = value of drops[i]*font_size
+
+                ctx.fillText(text, i*font_size, drops[i]*font_size);
+
+               
+
+                //отправка дропа случайно вверх после того, как он пересек экран
+
+                //рандом сброса, чтобы разбросать капли по оси Y
+
+                if(drops[i]*font_size > c.height && Math.random() > 0.975)
+
+                    drops[i] = 0;
+
+               
+
+                //увеличивая координату Y
+
+                drops[i]++;
+
+            }
+
+        }
+
+ 
+
+        setInterval(draw, 33);
+
+    </script>
+
+</body>
+
+</html>
